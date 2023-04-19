@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: Math.floor(Math.random() * 100) + 1,
+      username: "",
+      count: Math.floor(Math.random() * 100),
       steps: 0,
+      isEnabled: true,
     };
     this.plus1Click = this.plus1Click.bind(this);
     this.minus1Click = this.minus1Click.bind(this);
@@ -20,6 +20,7 @@ class App extends Component {
     this.setState((prevState) => ({
       count: prevState.count + 1,
       steps: prevState.steps + 1,
+      isEnabled: false,
     }));
   }
 
@@ -27,6 +28,7 @@ class App extends Component {
     this.setState((prevState) => ({
       count: prevState.count - 1,
       steps: prevState.steps + 1,
+      isEnabled: false,
     }));
   }
 
@@ -34,6 +36,7 @@ class App extends Component {
     this.setState((prevState) => ({
       count: prevState.count * 2,
       steps: prevState.steps + 1,
+      isEnabled: false,
     }));
   }
 
@@ -41,6 +44,7 @@ class App extends Component {
     this.setState((prevState) => ({
       count: prevState.count / 2,
       steps: prevState.steps + 1,
+      isEnabled: false,
     }));
   }
 
@@ -48,6 +52,8 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Get to 100!</h1>
+        <h2>User: {this.state.username}</h2>
+        <h4>{this.state.isEnabled == true ? "Enabled!" : "Disabled"}</h4>
         <h2>{this.state.count}</h2>
         <h3>steps: {this.state.steps}</h3>
         <h4>{this.state.count == 100 ? "You won!" : ""}</h4>

@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
+      count: Math.floor(Math.random() * 100) + 1,
     };
     this.plus1Click = this.plus1Click.bind(this);
     this.minus1Click = this.minus1Click.bind(this);
@@ -45,8 +45,8 @@ class App extends Component {
         <h1>Get to 100!</h1>
         <h2>{this.state.count}</h2>
         <div className="actions">
-          <button onClick={this.plus1Click}>-1</button>
-          <button onClick={this.minus1Click}>+1</button>
+          <button onClick={this.plus1Click}>+1</button>
+          <button onClick={this.minus1Click}>-1</button>
           <button onClick={this.multBy2Click}>×2</button>
           <button onClick={this.divBy2Click}>÷2</button>
         </div>

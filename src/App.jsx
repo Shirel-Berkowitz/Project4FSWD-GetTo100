@@ -50,6 +50,7 @@ class App extends Component {
         <h1>Get to 100!</h1>
         <h2>{this.state.count}</h2>
         <h3>steps: {this.state.steps}</h3>
+        <h4>{this.state.count == 100 ? "You won!" : ""}</h4>
         <div className="actions">
           <button onClick={this.plus1Click}>+1</button>
           <button onClick={this.minus1Click}>-1</button>

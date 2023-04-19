@@ -9,38 +9,47 @@ class App extends Component {
     this.state = {
       count: 0,
     };
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.plus1Click = this.plus1Click.bind(this);
+    this.minus1Click = this.minus1Click.bind(this);
+    this.multBy2Click = this.multBy2Click.bind(this);
+    this.divBy2Click = this.divBy2Click.bind(this);
   }
 
-  handleButtonClick() {
+  plus1Click() {
     this.setState((prevState) => ({
       count: prevState.count + 1,
+    }));
+  }
+
+  minus1Click() {
+    this.setState((prevState) => ({
+      count: prevState.count - 1,
+    }));
+  }
+
+  multBy2Click() {
+    this.setState((prevState) => ({
+      count: prevState.count * 2,
+    }));
+  }
+
+  divBy2Click() {
+    this.setState((prevState) => ({
+      count: prevState.count / 2,
     }));
   }
 
   render() {
     return (
       <div className="App">
-        <div>
-          <a href="https://vitejs.dev" target="_blank">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://reactjs.org" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
+        <h1>Get to 100!</h1>
+        <h2>{this.state.count}</h2>
+        <div className="actions">
+          <button onClick={this.plus1Click}>-1</button>
+          <button onClick={this.minus1Click}>+1</button>
+          <button onClick={this.multBy2Click}>×2</button>
+          <button onClick={this.divBy2Click}>÷2</button>
         </div>
-        <h1>Vite + React</h1>
-        <div className="card">
-          <button onClick={this.handleButtonClick}>
-            count is {this.state.count}
-          </button>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test HMR
-          </p>
-        </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
       </div>
     );
   }

@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useContext, useState } from "react";
 import "./App.css";
+// import { GamersContext } from './GamersContext';
+
 
 class App extends Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class App extends Component {
       count: Math.floor(Math.random() * 100),
       steps: 0,
       isEnabled: true,
+      gamers: [],
     };
     this.plus1Click = this.plus1Click.bind(this);
     this.minus1Click = this.minus1Click.bind(this);
@@ -47,6 +50,32 @@ class App extends Component {
       isEnabled: false,
     }));
   }
+
+  //???
+  // addGamer() {
+  //   const [name, setName] = useState('');
+  //   const [score, setScore] = useState('');
+
+  //   const {dispatch}= useContext(GamersContext);
+
+  //   const handleSubmit = (event) => {
+  //     event.preventDefault();
+  
+  //     const newGamer = {
+  //       name,
+  //       score,
+  //     };
+
+  //     dispatch({
+  //       type: 'ADD_GAMER',
+  //       payload: newGamer,
+  //     });
+
+  //     setName('');
+  //     setScore('');
+  //   };
+  
+  // }
 
   render() {
     return (

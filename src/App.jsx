@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       count: Math.floor(Math.random() * 100) + 1,
+      steps: 0,
     };
     this.plus1Click = this.plus1Click.bind(this);
     this.minus1Click = this.minus1Click.bind(this);
@@ -18,24 +19,28 @@ class App extends Component {
   plus1Click() {
     this.setState((prevState) => ({
       count: prevState.count + 1,
+      steps: prevState.steps + 1,
     }));
   }
 
   minus1Click() {
     this.setState((prevState) => ({
       count: prevState.count - 1,
+      steps: prevState.steps + 1,
     }));
   }
 
   multBy2Click() {
     this.setState((prevState) => ({
       count: prevState.count * 2,
+      steps: prevState.steps + 1,
     }));
   }
 
   divBy2Click() {
     this.setState((prevState) => ({
       count: prevState.count / 2,
+      steps: prevState.steps + 1,
     }));
   }
 
@@ -44,6 +49,7 @@ class App extends Component {
       <div className="App">
         <h1>Get to 100!</h1>
         <h2>{this.state.count}</h2>
+        <h3>steps: {this.state.steps}</h3>
         <div className="actions">
           <button onClick={this.plus1Click}>+1</button>
           <button onClick={this.minus1Click}>-1</button>

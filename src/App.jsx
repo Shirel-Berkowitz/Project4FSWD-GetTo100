@@ -9,6 +9,7 @@ class App extends Component {
       username: "",
       count: Math.floor(Math.random() * 100),
       steps: 0,
+      isVisibleSignUpDiv: true,
       isDisabledBtn: false,
       players: [
         { name: "Shirel", score: 0 },
@@ -27,6 +28,21 @@ class App extends Component {
       score: 0,
     };
     console.log(`Adding player ${this.state.username}`);
+    this.setState((prevState) => ({
+      players: [...prevState.players, newPlayer],
+    }));
+  }
+
+  //add a new player to the array of players
+  addLastPlayer(name) {
+    const newPlayer = {
+      name: name,
+      score: 0,
+    };
+    console.log(`Adding player ${this.state.username}`);
+    this.setState((prevState) => ({
+      isVisibleSignUpDiv: !prevState.isVisibleSignUpDiv,
+    }));
     this.setState((prevState) => ({
       players: [...prevState.players, newPlayer],
     }));
@@ -57,38 +73,15 @@ class App extends Component {
     });
   };
 
-  //???
-  // addGamer() {
-  //   const [name, setName] = useState('');
-  //   const [score, setScore] = useState('');
-
-  //   const {dispatch}= useContext(GamersContext);
-
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-
-  //     const newGamer = {
-  //       name,
-  //       score,
-  //     };
-
-  //     dispatch({
-  //       type: 'ADD_GAMER',
-  //       payload: newGamer,
-  //     });
-
-  //     setName('');
-  //     setScore('');
-  //   };
-
-  // }
-
   render() {
     const { isDisabledBtn } = this.state;
     return (
       <div>
         <h1>Get to 100!</h1>
-        <div className="Sign-up">
+        <div
+          className="Sign-up"
+          style={{ display: this.state.isVisibleSignUpDiv ? "block" : "none" }}
+        >
           <h2>Hello!</h2>
           <h2>Please enter your name:</h2>
           <input type="text" onChange={this.handleInputChange}></input>
@@ -96,10 +89,15 @@ class App extends Component {
           <button onClick={() => this.addNewPlayer(this.state.username)}>
             Add another player
           </button>
-          <button>Done, let's play!</button>
+          <button onClick={() => this.addLastPlayer(this.state.username)}>
+            Done, let's play!
+          </button>
         </div>
 
-        <div className="App" style={{ visibility: "collapse" }}>
+        <div
+          className="App"
+          style={{ display: this.state.isVisibleSignUpDiv ? "none" : "block" }}
+        >
           <h2>User: {this.state.username}</h2>
           <h4>{this.state.isDisabledBtn == true ? "Enabled!" : "Disabled"}</h4>
           <h2>{this.state.count}</h2>

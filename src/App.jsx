@@ -2,7 +2,6 @@ import React, { Component, useContext, useState } from "react";
 import "./App.css";
 // import { GamersContext } from './GamersContext';
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -10,9 +9,10 @@ class App extends Component {
       username: "",
       count: Math.floor(Math.random() * 100),
       steps: 0,
-      isEnabled: true,
-      gamers: [],
+      isDisabledBtn: false,
+      //gamers: [],
     };
+
     this.plus1Click = this.plus1Click.bind(this);
     this.minus1Click = this.minus1Click.bind(this);
     this.multBy2Click = this.multBy2Click.bind(this);
@@ -23,7 +23,7 @@ class App extends Component {
     this.setState((prevState) => ({
       count: prevState.count + 1,
       steps: prevState.steps + 1,
-      isEnabled: false,
+      isDisabledBtn: true,
     }));
   }
 
@@ -31,7 +31,7 @@ class App extends Component {
     this.setState((prevState) => ({
       count: prevState.count - 1,
       steps: prevState.steps + 1,
-      isEnabled: false,
+      isDisabledBtn: true,
     }));
   }
 
@@ -39,7 +39,7 @@ class App extends Component {
     this.setState((prevState) => ({
       count: prevState.count * 2,
       steps: prevState.steps + 1,
-      isEnabled: false,
+      isDisabledBtn: true,
     }));
   }
 
@@ -47,9 +47,15 @@ class App extends Component {
     this.setState((prevState) => ({
       count: prevState.count / 2,
       steps: prevState.steps + 1,
-      isEnabled: false,
+      isDisabledBtn: true,
     }));
   }
+
+  // addGamerButton() {
+  //   this.setState((username, score = 0) => ({
+  //     //gamers: this.state.gamers.push()
+  //   }));
+  // }
 
   //???
   // addGamer() {
@@ -60,7 +66,7 @@ class App extends Component {
 
   //   const handleSubmit = (event) => {
   //     event.preventDefault();
-  
+
   //     const newGamer = {
   //       name,
   //       score,
@@ -74,23 +80,32 @@ class App extends Component {
   //     setName('');
   //     setScore('');
   //   };
-  
+
   // }
 
   render() {
+    const { isDisabledBtn } = this.state;
     return (
       <div className="App">
         <h1>Get to 100!</h1>
         <h2>User: {this.state.username}</h2>
-        <h4>{this.state.isEnabled == true ? "Enabled!" : "Disabled"}</h4>
+        <h4>{this.state.isDisabledBtn == true ? "Enabled!" : "Disabled"}</h4>
         <h2>{this.state.count}</h2>
         <h3>steps: {this.state.steps}</h3>
         <h4>{this.state.count == 100 ? "You won!" : ""}</h4>
-        <div className="actions">
-          <button onClick={this.plus1Click}>+1</button>
-          <button onClick={this.minus1Click}>-1</button>
-          <button onClick={this.multBy2Click}>×2</button>
-          <button onClick={this.divBy2Click}>÷2</button>
+        <div className="actionBtns">
+          <button onClick={this.plus1Click} disabled={isDisabledBtn}>
+            +1
+          </button>
+          <button onClick={this.minus1Click} disabled={isDisabledBtn}>
+            -1
+          </button>
+          <button onClick={this.multBy2Click} disabled={isDisabledBtn}>
+            ×2
+          </button>
+          <button onClick={this.divBy2Click} disabled={isDisabledBtn}>
+            ÷2
+          </button>
         </div>
       </div>
     );

@@ -1,6 +1,5 @@
 import React, { Component, useContext, useState } from "react";
 import "./App.css";
-// import { GamersContext } from './GamersContext';
 
 class App extends Component {
   constructor(props) {
@@ -12,9 +11,10 @@ class App extends Component {
       isVisibleSignUpDiv: true,
       isDisabledBtn: false,
       players: [
-        { name: "Shirel", score: 0 },
-        { name: "Ori", score: 0 },
+        { id: 1, name: "Shirel", score: [11, 7, 4] },
+        { id: 2, name: "Ori", score: [5] },
       ],
+      nextPlayerId: 3,
       currentPlayerIndex: 0,
       gameOver: false,
     };
@@ -24,11 +24,13 @@ class App extends Component {
   //add a new player to the array of players
   addNewPlayer(name) {
     const newPlayer = {
+      id: this.state.nextPlayerId,
       name: name,
-      score: 0,
+      score: [],
     };
     console.log(`Adding player ${this.state.username}`);
     this.setState((prevState) => ({
+      nextPlayerId: this.state.nextPlayerId + 1,
       players: [...prevState.players, newPlayer],
     }));
   }
@@ -36,14 +38,16 @@ class App extends Component {
   //add a new player to the array of players
   addLastPlayer(name) {
     const newPlayer = {
+      id: this.state.nextPlayerId,
       name: name,
-      score: 0,
+      score: [],
     };
     console.log(`Adding player ${this.state.username}`);
     this.setState((prevState) => ({
       isVisibleSignUpDiv: !prevState.isVisibleSignUpDiv,
     }));
     this.setState((prevState) => ({
+      nextPlayerId: this.state.nextPlayerId + 1,
       players: [...prevState.players, newPlayer],
     }));
   }
@@ -75,6 +79,13 @@ class App extends Component {
 
   render() {
     const { isDisabledBtn } = this.state;
+    const { players } = this.state;
+    const itemElements = players.map((item, index) => (
+      <li key={index}>
+        {item.id}, {item.name}, {item.score}
+      </li>
+    ));
+    console.log(`Array of players: ${itemElements}`);
     return (
       <div>
         <h1>Get to 100!</h1>

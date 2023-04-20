@@ -10,46 +10,36 @@ class App extends Component {
       count: Math.floor(Math.random() * 100),
       steps: 0,
       isDisabledBtn: false,
-      //gamers: [],
+      players: [
+        { name: "Shirel", value: 0 },
+        { name: "Ori", value: 0 },
+      ],
+      currentPlayerIndex: 0,
+      gameOver: false,
     };
-
-    this.plus1Click = this.plus1Click.bind(this);
-    this.minus1Click = this.minus1Click.bind(this);
-    this.multBy2Click = this.multBy2Click.bind(this);
-    this.divBy2Click = this.divBy2Click.bind(this);
+    this.handlePlayerAction = this.handlePlayerAction.bind(this);
   }
 
-  plus1Click() {
-    this.setState((prevState) => ({
-      count: prevState.count + 1,
-      steps: prevState.steps + 1,
-      isDisabledBtn: true,
-    }));
-  }
-
-  minus1Click() {
-    this.setState((prevState) => ({
-      count: prevState.count - 1,
-      steps: prevState.steps + 1,
-      isDisabledBtn: true,
-    }));
-  }
-
-  multBy2Click() {
-    this.setState((prevState) => ({
-      count: prevState.count * 2,
-      steps: prevState.steps + 1,
-      isDisabledBtn: true,
-    }));
-  }
-
-  divBy2Click() {
-    this.setState((prevState) => ({
-      count: prevState.count / 2,
-      steps: prevState.steps + 1,
-      isDisabledBtn: true,
-    }));
-  }
+  handlePlayerAction = (value) => {
+    this.setState((prevState) => {
+      let newValue;
+      // Perform player action
+      if (value === "×2") {
+        newValue = prevState.count * 2;
+      } else if (value === "÷2") {
+        newValue = prevState.count / 2;
+      } else if (value === "+1") {
+        newValue = prevState.count + 1;
+      } else if (value === "-1") {
+        newValue = prevState.count - 1;
+      }
+      return {
+        count: newValue,
+        steps: prevState.steps + 1,
+        isDisabledBtn: true,
+      };
+    });
+  };
 
   // addGamerButton() {
   //   this.setState((username, score = 0) => ({
@@ -94,16 +84,28 @@ class App extends Component {
         <h3>steps: {this.state.steps}</h3>
         <h4>{this.state.count == 100 ? "You won!" : ""}</h4>
         <div className="actionBtns">
-          <button onClick={this.plus1Click} disabled={isDisabledBtn}>
+          <button
+            onClick={() => this.handlePlayerAction("+1")}
+            disabled={isDisabledBtn}
+          >
             +1
           </button>
-          <button onClick={this.minus1Click} disabled={isDisabledBtn}>
+          <button
+            onClick={() => this.handlePlayerAction("-1")}
+            disabled={isDisabledBtn}
+          >
             -1
           </button>
-          <button onClick={this.multBy2Click} disabled={isDisabledBtn}>
+          <button
+            onClick={() => this.handlePlayerAction("×2")}
+            disabled={isDisabledBtn}
+          >
             ×2
           </button>
-          <button onClick={this.divBy2Click} disabled={isDisabledBtn}>
+          <button
+            onClick={() => this.handlePlayerAction("÷2")}
+            disabled={isDisabledBtn}
+          >
             ÷2
           </button>
         </div>

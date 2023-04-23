@@ -41,7 +41,7 @@ class App extends Component {
     if (value === "×2") {
       newValue = number * 2;
     } else if (value === "÷2") {
-      newValue = number / 2;
+      newValue = Math.floor(number / 2);
     } else if (value === "+1") {
       newValue = number + 1;
     } else if (value === "-1") {

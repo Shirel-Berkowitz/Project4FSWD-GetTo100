@@ -5,10 +5,6 @@ import BoardPlayer from "./components/BoardPlayer";
 class App extends Component {
   constructor(props) {
     super(props);
-    /*this.state = {
-      steps: 0,
-      //isDisabledBtn: false,
-    };*/
     this.handlePlayerAction = this.handlePlayerAction.bind(this);
   }
 
@@ -22,6 +18,7 @@ class App extends Component {
     this.setState((prevState) => ({
       isVisibleSignUpDiv: !prevState.isVisibleSignUpDiv,
     }));
+    //adding players
     this.setState((prevState) => ({
       nextPlayerId: this.state.nextPlayerId + 1,
       players: [...prevState.players, newPlayer],
@@ -30,10 +27,17 @@ class App extends Component {
 
   handlePlayerAction(value) {
     //תוסיפי תנאי שאם זה לא תורך אתה לא יכול ללחוץ
-    let updatePlayer = this.props.allplayers[this.props.turn];
+    let allPlayers = this.props.allplayers;
+    let updatePlayer = allPlayers[this.props.turn];
     let tempSteps = updatePlayer.steps;
     let number = updatePlayer.count;
     let newValue;
+    // for (let i = o; i < allPlayers.length; i++) {
+    //   if (allPlayers[i].thisPlayer.id != this.props.turn.id) {
+    //     //this.props.App.
+    //   }
+    // }
+
     if (value === "×2") {
       newValue = number * 2;
     } else if (value === "÷2") {

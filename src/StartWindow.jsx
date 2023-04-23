@@ -17,6 +17,7 @@ class StartWindow extends Component {
       currentPlayer: 0,
       gameOver: false,
       inputValue: "",
+      disabled: true,
     };
   }
   handleInputChange(event) {
@@ -25,6 +26,7 @@ class StartWindow extends Component {
 
   //add a new player to the array of players
   addNewPlayer(username) {
+    this.setState({ disabled: false });
     const newPlayer = {
       pid: ++PlayerId,
       name: username,
@@ -70,7 +72,13 @@ class StartWindow extends Component {
           <button onClick={() => this.addNewPlayer(this.state.inputValue)}>
             Add another player
           </button>
-          <button onClick={() => this.goToPlay()}>let's play!</button>
+          <button
+            id="goToPlayBtn"
+            disabled={this.state.disabled}
+            onClick={() => this.goToPlay()}
+          >
+            let's play!
+          </button>
         </div>
       </div>
     ) : (

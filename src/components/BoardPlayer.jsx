@@ -19,6 +19,7 @@ class BoardPlayer extends Component {
     let player = this.props.thisPlayer;
     return (
       <div>
+        {/* disabled={this.props.state.disabled} */}
         <div className="App">
           <h2>User: {player.name}</h2>
           <h4>{player.pid === this.props.turn ? "Enabled!" : "Disabled"}</h4>

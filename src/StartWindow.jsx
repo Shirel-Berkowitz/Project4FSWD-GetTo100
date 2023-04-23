@@ -70,7 +70,7 @@ class StartWindow extends Component {
           ></input>
           <br></br>
           <button onClick={() => this.addNewPlayer(this.state.inputValue)}>
-            Add another player
+            Add player
           </button>
           <button
             id="goToPlayBtn"

@@ -1,13 +1,24 @@
 import React, { Component } from "react";
+
 class BoardPlayer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      disabled: true,
+    };
     this.formatActions = this.formatActions.bind(this);
   }
 
   formatActions() {
     return (
-      <div className="actionBtns">
+      <div
+        className="actionBtns"
+        disabled={
+          this.props.thisPlayer.pid === this.props.turn
+            ? (this.state.disabled = false)
+            : (this.state.disabled = true)
+        }
+      >
         <button onClick={() => this.props.handlePlayerAction("+1")}>+1</button>
         <button onClick={() => this.props.handlePlayerAction("-1")}>-1</button>
         <button onClick={() => this.props.handlePlayerAction("×2")}>×2</button>
@@ -19,7 +30,6 @@ class BoardPlayer extends Component {
     let player = this.props.thisPlayer;
     return (
       <div>
-        {/* disabled={this.props.state.disabled} */}
         <div className="App">
           <h2>User: {player.name}</h2>
           <h4>{player.pid === this.props.turn ? "Enabled!" : "Disabled"}</h4>

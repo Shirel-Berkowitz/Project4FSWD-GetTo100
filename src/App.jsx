@@ -6,6 +6,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handlePlayerAction = this.handlePlayerAction.bind(this);
+    this.newGameToWinner = this.newGameToWinner.bind(this);
+    this.winnerQuitGame = this.winnerQuitGame.bind(this);
   }
 
   addLastPlayer(name) {
@@ -26,17 +28,12 @@ class App extends Component {
   }
 
   handlePlayerAction(value) {
-    //תוסיפי תנאי שאם זה לא תורך אתה לא יכול ללחוץ
+    //להוסיף תנאי שאם זה לא תורך אתה לא יכול ללחוץ
     let allPlayers = this.props.allplayers;
     let updatePlayer = allPlayers[this.props.turn];
     let tempSteps = updatePlayer.steps;
     let number = updatePlayer.count;
     let newValue;
-    // for (let i = o; i < allPlayers.length; i++) {
-    //   if (allPlayers[i].thisPlayer.id != this.props.turn.id) {
-    //     //this.props.App.
-    //   }
-    // }
 
     if (value === "×2") {
       newValue = number * 2;
@@ -54,6 +51,14 @@ class App extends Component {
     updatePlayer.steps = tempSteps;
 
     this.props.nextTurn(updatePlayer);
+  }
+
+  newGameToWinner(){
+
+  }
+
+  winnerQuitGame(){
+
   }
 
   render() {

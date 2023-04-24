@@ -7,6 +7,7 @@ class BoardPlayer extends Component {
       disabled: true,
     };
     this.formatActions = this.formatActions.bind(this);
+    this.winningActions = this.winningActions.bind(this);
   }
 
   formatActions() {
@@ -26,6 +27,19 @@ class BoardPlayer extends Component {
       </div>
     );
   }
+  //buttons that shows up to the winner
+  winningActions() {
+    //show buttons only if won
+    if (this.props.thisPlayer.count === 100) {
+      return (
+        <div className="WinningBtns">
+          <button onClick={() => this.props.newGameToWinner()}>New game</button>
+          <button onClick={() => this.props.winnerQuitGame()}>Quit</button>
+        </div>
+      );
+    }
+    return;
+  }
   render() {
     let player = this.props.thisPlayer;
     return (
@@ -36,6 +50,7 @@ class BoardPlayer extends Component {
           <h2>{player.count}</h2>
           <h3>steps: {this.props.steps}</h3>
           <h4>{player.count === 100 ? "You won!" : ""}</h4>
+          {this.winningActions()}
           {this.formatActions()}
         </div>
       </div>

@@ -5,12 +5,6 @@ let PlayerId = -1;
 class StartWindow extends Component {
   constructor(props) {
     super(props);
-    //bind functions
-    this.addNewPlayer = this.addNewPlayer.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.goToPlay = this.goToPlay.bind(this);
-    this.nextTurn = this.nextTurn.bind(this);
-
     this.state = {
       startGame: false,
       players: [],
@@ -18,8 +12,20 @@ class StartWindow extends Component {
       gameOver: false,
       inputValue: "",
       disabled: true,
+      top3: [],
     };
+
+    //bind functions
+    this.addNewPlayer = this.addNewPlayer.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.goToPlay = this.goToPlay.bind(this);
+    this.nextTurn = this.nextTurn.bind(this);
+    this.WinnerNewGame = this.winnerNewGame.bind(this);
+    this.winnerQuitGame = this.winnerQuitGame.bind(this);
+    this.updateWinnerScore = this.updateWinnerScore.bind(this);
+    this.updateTop3 = this.updateTop3.bind(this);
   }
+
   handleInputChange(event) {
     this.setState({ inputValue: event.target.value });
   }
@@ -30,15 +36,12 @@ class StartWindow extends Component {
     const newPlayer = {
       pid: ++PlayerId,
       name: username,
+      wins: 0,
       score: [],
       count: Math.floor(Math.random() * 100),
       steps: 0,
     };
 
-    //console.log(`Adding player ${this.state.inputValue}`);
-    /*this.setState((prevState) => ({
-        players: [...prevState.players, newPlayer],
-        }));*/
     let update = this.state.players;
     update.push(newPlayer);
     this.setState({
@@ -52,11 +55,48 @@ class StartWindow extends Component {
   }
 
   goToPlay() {
+    //console.log("go to play");
     this.setState({
       startGame: true,
       currentPlayer: 0,
     });
   }
+
+  winnerNewGame(winner) {
+    console.log("woohoo");
+    this.updateWinnerScore(winner);
+    //console.log(this.state.players[this.state.currentPlayer].score);
+
+    //continue ----- start new game
+    this.goToPlay();
+  }
+
+  winnerQuitGame(winner) {
+    console.log("oh yeah!");
+    this.updateWinnerScore(winner);
+    //remove player from players array
+    // let newPlayers = this.state.players.filter(
+    //   (item) => item !== winner.target.value
+    // );
+    // this.setState({ players: newPlayers });
+  }
+
+  //לבדוק למה לא עובד
+  //update array of scores and increase the number of wins
+  updateWinnerScore(winner) {
+    let updatedPlayersArr = this.state.players;
+    for (let i = 0; i < updatedPlayersArr.length; i++) {
+      if (updatedPlayersArr[i].pid === winner.pid) {
+        updatedPlayersArr[i].score.push(winner.steps);
+        break;
+      }
+    }
+    this.setState({
+      players: updatedPlayersArr,
+      wins: this.state.wins + 1,
+    });
+  }
+
   nextTurn(updateP) {
     let updatePlayers = [...this.state.players];
     updateP[this.state.currentPlayer] = updateP;
@@ -64,6 +104,14 @@ class StartWindow extends Component {
     let nextT = tempTurn % this.state.players.length;
 
     this.setState({ currentPlayer: nextT, players: updatePlayers });
+  }
+
+  updateTop3() {
+    let players = this.state.players.slice();
+    players.sort((a, b) => {
+      return b.wins - a.wins;
+    });
+    return players.slice(0, 3);
   }
 
   render() {
@@ -96,6 +144,11 @@ class StartWindow extends Component {
         allplayers={this.state.players}
         turn={this.state.currentPlayer}
         nextTurn={this.nextTurn}
+        winnerNewGame={this.winnerNewGame}
+        winnerQuitGame={this.winnerQuitGame}
+        updateWinnerScore={this.updateWinnerScore}
+        goToPlay={this.goToPlay}
+        updateTop3={this.updateTop3}
       />
     );
   }

@@ -30,11 +30,16 @@ class BoardPlayer extends Component {
   //buttons that shows up to the winner
   winningActions() {
     //show buttons only if won
+    let winner = this.props.thisPlayer;
     if (this.props.thisPlayer.count === 100) {
       return (
         <div className="WinningBtns">
-          <button onClick={() => this.props.newGameToWinner()}>New game</button>
-          <button onClick={() => this.props.winnerQuitGame()}>Quit</button>
+          <button onClick={() => this.props.winnerNewGame(winner)}>
+            New game
+          </button>
+          <button onClick={() => this.props.winnerQuitGame(winner)}>
+            Quit
+          </button>
         </div>
       );
     }

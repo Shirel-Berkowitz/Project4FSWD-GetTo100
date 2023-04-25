@@ -6,8 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.handlePlayerAction = this.handlePlayerAction.bind(this);
-    this.newGameToWinner = this.newGameToWinner.bind(this);
-    this.winnerQuitGame = this.winnerQuitGame.bind(this);
+    this.updateTop3 = this.updateTop3.bind(this);
   }
 
   addLastPlayer(name) {
@@ -28,7 +27,6 @@ class App extends Component {
   }
 
   handlePlayerAction(value) {
-    //להוסיף תנאי שאם זה לא תורך אתה לא יכול ללחוץ
     let allPlayers = this.props.allplayers;
     let updatePlayer = allPlayers[this.props.turn];
     let tempSteps = updatePlayer.steps;
@@ -44,7 +42,6 @@ class App extends Component {
     } else if (value === "-1") {
       newValue = number - 1;
     }
-    console.log("new value", newValue);
     tempSteps = tempSteps + 1;
     //this.setState({steps: this.state.steps + 1})
     updatePlayer.count = newValue;
@@ -53,18 +50,27 @@ class App extends Component {
     this.props.nextTurn(updatePlayer);
   }
 
-  newGameToWinner(){
-
-  }
-
-  winnerQuitGame(){
-
+  updateTop3() {
+    let top3 = this.props.updateTop3();
+    return (
+      <div>
+        <h2>Top 3 Winners:</h2>
+        <ul>
+          {top3.map((player) => (
+            <li key={player.pid}>
+              {player.name} ({player.score.length} wins)
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   }
 
   render() {
     const players = this.props.allplayers;
     return (
       <div>
+        {this.updateTop3()}
         {players.map((player, i) => (
           <BoardPlayer
             key={i}
@@ -72,6 +78,10 @@ class App extends Component {
             turn={this.props.turn}
             handlePlayerAction={this.handlePlayerAction}
             steps={player.steps}
+            winnerNewGame={this.props.winnerNewGame}
+            winnerQuitGame={this.props.winnerQuitGame}
+            updateWinnerScore={this.props.updateWinnerScore}
+            goToPlay={this.props.goToPlay}
           />
         ))}
       </div>

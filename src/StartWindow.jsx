@@ -35,17 +35,27 @@ class StartWindow extends Component {
       steps: 0,
     };
 
-    console.log(`Adding player ${this.state.username}`);
+    //console.log(`Adding player ${this.state.inputValue}`);
     /*this.setState((prevState) => ({
         players: [...prevState.players, newPlayer],
         }));*/
     let update = this.state.players;
     update.push(newPlayer);
-    this.setState({ players: update, inputValue: "" });
+    this.setState({
+      players: update,
+      inputValue: "",
+      currentPlayer: this.state.currentPlayer + 1,
+    });
+    console.log(
+      `current player: ${this.state.players[this.state.currentPlayer].name}`
+    );
   }
 
   goToPlay() {
-    this.setState({ startGame: true });
+    this.setState({
+      startGame: true,
+      currentPlayer: 0,
+    });
   }
   nextTurn(updateP) {
     let updatePlayers = [...this.state.players];

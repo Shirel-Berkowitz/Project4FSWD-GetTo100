@@ -9,28 +9,11 @@ class App extends Component {
     this.updateTop3 = this.updateTop3.bind(this);
   }
 
-  addLastPlayer(name) {
-    const newPlayer = {
-      id: this.state.nextPlayerId,
-      name: name,
-      score: [],
-    };
-    //console.log(`Adding player ${this.state.username}`);
-    this.setState((prevState) => ({
-      isVisibleSignUpDiv: !prevState.isVisibleSignUpDiv,
-    }));
-    //adding players
-    this.setState((prevState) => ({
-      nextPlayerId: this.state.nextPlayerId + 1,
-      players: [...prevState.players, newPlayer],
-    }));
-  }
-
   handlePlayerAction(value) {
     let allPlayers = this.props.allplayers;
-    let updatePlayer = allPlayers[this.props.turn];
-    let tempSteps = updatePlayer.steps;
-    let number = updatePlayer.count;
+    let updateP = allPlayers[this.props.turn];
+    let tempSteps = updateP.steps;
+    let number = updateP.count;
     let newValue;
 
     if (value === "×2") {
@@ -43,18 +26,25 @@ class App extends Component {
       newValue = number - 1;
     }
     tempSteps = tempSteps + 1;
-    //this.setState({steps: this.state.steps + 1})
-    updatePlayer.count = newValue;
-    updatePlayer.steps = tempSteps;
-
-    this.props.nextTurn(updatePlayer);
+    updateP.count = newValue;
+    updateP.steps = tempSteps;
+    if (newValue === 100) {
+      console.log(updateP);
+      this.props.updateWinnerScore(updateP);
+    } else {
+      this.props.nextTurn(updateP);
+    }
   }
 
   updateTop3() {
     let top3 = this.props.updateTop3();
+    //דרך למיין את 3 השחקנים:
+    //לעשות push לשחקן האחרון שניצח, למיין, ואז להוציא את השחקן במיקום ה3
+    //לפני שמכניסים שחקן חדש - יש לבדוק האם השם שלו כבר רשום בשיאים - ואם כן, לעדכן את החדש ואז למיין את שלושתם.
     return (
       <div>
         <h2>Top 3 Winners:</h2>
+
         <ul>
           {top3.map((player) => (
             <li key={player.pid}>
@@ -78,7 +68,6 @@ class App extends Component {
             turn={this.props.turn}
             handlePlayerAction={this.handlePlayerAction}
             steps={player.steps}
-            winnerNewGame={this.props.winnerNewGame}
             winnerQuitGame={this.props.winnerQuitGame}
             updateWinnerScore={this.props.updateWinnerScore}
             goToPlay={this.props.goToPlay}

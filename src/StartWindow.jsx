@@ -20,7 +20,6 @@ class StartWindow extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.goToPlay = this.goToPlay.bind(this);
     this.nextTurn = this.nextTurn.bind(this);
-    this.WinnerNewGame = this.winnerNewGame.bind(this);
     this.winnerQuitGame = this.winnerQuitGame.bind(this);
     this.updateWinnerScore = this.updateWinnerScore.bind(this);
     this.updateTop3 = this.updateTop3.bind(this);
@@ -56,29 +55,28 @@ class StartWindow extends Component {
 
   goToPlay() {
     //console.log("go to play");
+    let updatePlayers = this.state.players;
+    for (let i = 0; i < updatePlayers.length; i++) {
+      updatePlayers[i].steps = 0;
+      updatePlayers[i].count = Math.floor(Math.random() * 100);
+    }
     this.setState({
       startGame: true,
       currentPlayer: 0,
+      players: updatePlayers,
     });
   }
 
-  winnerNewGame(winner) {
-    console.log("woohoo");
-    this.updateWinnerScore(winner);
-    //console.log(this.state.players[this.state.currentPlayer].score);
-
-    //continue ----- start new game
-    this.goToPlay();
-  }
-
   winnerQuitGame(winner) {
-    console.log("oh yeah!");
-    this.updateWinnerScore(winner);
     //remove player from players array
-    // let newPlayers = this.state.players.filter(
-    //   (item) => item !== winner.target.value
-    // );
-    // this.setState({ players: newPlayers });
+    let newPlayers = this.state.players.filter(
+      (item) => item.pid !== winner.pid //target.value
+    );
+    for (let i = 0; i < newPlayers.length; i++) {
+      newPlayers[i].pid = i;
+    }
+
+    this.setState({ players: newPlayers, currentPlayer: 0 });
   }
 
   //לבדוק למה לא עובד
@@ -88,9 +86,9 @@ class StartWindow extends Component {
     for (let i = 0; i < updatedPlayersArr.length; i++) {
       if (updatedPlayersArr[i].pid === winner.pid) {
         updatedPlayersArr[i].score.push(winner.steps);
-        break;
       }
     }
+    //יש לאפס את כל הsteps של השחקנים
     this.setState({
       players: updatedPlayersArr,
       wins: this.state.wins + 1,
@@ -99,10 +97,9 @@ class StartWindow extends Component {
 
   nextTurn(updateP) {
     let updatePlayers = [...this.state.players];
-    updateP[this.state.currentPlayer] = updateP;
+    updatePlayers[this.state.currentPlayer] = updateP;
     let tempTurn = this.state.currentPlayer + 1;
     let nextT = tempTurn % this.state.players.length;
-
     this.setState({ currentPlayer: nextT, players: updatePlayers });
   }
 
@@ -144,7 +141,6 @@ class StartWindow extends Component {
         allplayers={this.state.players}
         turn={this.state.currentPlayer}
         nextTurn={this.nextTurn}
-        winnerNewGame={this.winnerNewGame}
         winnerQuitGame={this.winnerQuitGame}
         updateWinnerScore={this.updateWinnerScore}
         goToPlay={this.goToPlay}

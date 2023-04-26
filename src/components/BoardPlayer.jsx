@@ -34,9 +34,7 @@ class BoardPlayer extends Component {
     if (this.props.thisPlayer.count === 100) {
       return (
         <div className="WinningBtns">
-          <button onClick={() => this.props.winnerNewGame(winner)}>
-            New game
-          </button>
+          <button onClick={() => this.props.goToPlay()}>New game</button>
           <button onClick={() => this.props.winnerQuitGame(winner)}>
             Quit
           </button>
@@ -55,6 +53,9 @@ class BoardPlayer extends Component {
           <h2>{player.count}</h2>
           <h3>steps: {this.props.steps}</h3>
           <h4>{player.count === 100 ? "You won!" : ""}</h4>
+          {this.props.thisPlayer.score.map((s) => (
+            <span key={s}>|{s}|</span>
+          ))}
           {this.winningActions()}
           {this.formatActions()}
         </div>

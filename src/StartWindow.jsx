@@ -53,6 +53,7 @@ class StartWindow extends Component {
     );
   }
 
+  //let's play btn
   goToPlay() {
     //console.log("go to play");
     let updatePlayers = this.state.players;
@@ -79,7 +80,6 @@ class StartWindow extends Component {
     this.setState({ players: newPlayers, currentPlayer: 0 });
   }
 
-  //לבדוק למה לא עובד
   //update array of scores and increase the number of wins
   updateWinnerScore(winner) {
     let updatedPlayersArr = this.state.players;
@@ -88,7 +88,6 @@ class StartWindow extends Component {
         updatedPlayersArr[i].score.push(winner.steps);
       }
     }
-    //יש לאפס את כל הsteps של השחקנים
     this.setState({
       players: updatedPlayersArr,
       wins: this.state.wins + 1,

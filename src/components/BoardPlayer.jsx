@@ -47,7 +47,7 @@ class BoardPlayer extends Component {
     let player = this.props.thisPlayer;
     return (
       <div>
-        <div className="App">
+        <div className="App" id="gameBoard">
           <h2>User: {player.name}</h2>
           <h4>{player.pid === this.props.turn ? "Enabled!" : "Disabled"}</h4>
           <h2>{player.count}</h2>

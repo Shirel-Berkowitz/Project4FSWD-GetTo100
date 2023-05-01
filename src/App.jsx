@@ -38,13 +38,10 @@ class App extends Component {
 
   updateTop3() {
     let top3 = this.props.updateTop3();
-    //דרך למיין את 3 השחקנים:
-    //לעשות push לשחקן האחרון שניצח, למיין, ואז להוציא את השחקן במיקום ה3
-    //לפני שמכניסים שחקן חדש - יש לבדוק האם השם שלו כבר רשום בשיאים - ואם כן, לעדכן את החדש ואז למיין את שלושתם.
+    top3.sort((a, b) => b.score - a.score);
     return (
       <div>
         <h2>Top 3 Winners:</h2>
-
         <ul>
           {top3.map((player) => (
             <li key={player.pid}>
